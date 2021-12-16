@@ -19,19 +19,19 @@
             </providers>
         </encoder>
     </appender>
-
-    <logger name="dk.kvalitetsit" level="${LOG_LEVEL}" additivity="false">
+    <logger name="dk.kvalitetsit" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="ca.uhn.fhir.jpa.search.reindex">
+        <level value="WARN" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.hibernate">
+        <level value="ERROR" />
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <logger name="ca.uhn.fhir.jpa.search.reindex" level="${HAPI_LOG_LEVEL}" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
-    <logger name="org.hibernate" level="${HIBERNATE_LOG_LEVEL}" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
-
-    <root level="${LOG_LEVEL_FRAMEWORK}">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

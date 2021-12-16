@@ -15,6 +15,16 @@ if [[ -z $LOG_LEVEL ]]; then
   export LOG_LEVEL=INFO
 fi
 
+if [[ -z $HAPI_LOG_LEVEL ]]; then
+  echo "Default HAPI_LOG_LEVEL = INFO"
+  export HAPI_LOG_LEVEL=INFO
+fi
+
+if [[ -z $HIBERNATE_LOG_LEVEL ]]; then
+  echo "Default HIBERNATE_LOG_LEVEL = INFO"
+  export HIBERNATE_LOG_LEVEL=INFO
+fi
+
 if [[ -z $LOG_LEVEL_FRAMEWORK ]]; then
   echo "Default LOG_LEVEL_FRAMEWORK = INFO"
   export LOG_LEVEL_FRAMEWORK=INFO
