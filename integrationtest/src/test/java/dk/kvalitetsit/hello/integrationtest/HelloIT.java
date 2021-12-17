@@ -20,7 +20,7 @@ public class HelloIT extends AbstractIntegrationTest {
         helloApi = new KithugsApi(apiClient);
     }
 
-    @Test
+    //@Test
     public void testCallService() throws ApiException {
 //        var input = new HelloRequest();
 //        input.setName("John Doe");
