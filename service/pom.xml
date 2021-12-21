@@ -125,6 +125,13 @@
 <!--            <artifactId>hibernate-search-orm</artifactId>-->
 <!--            <version>5.11.10.Final</version>-->
 <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/ca.uhn.hapi.fhir/hapi-fhir-server-openapi -->
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-server-openapi</artifactId>
+            <version>${hapi.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <resources>

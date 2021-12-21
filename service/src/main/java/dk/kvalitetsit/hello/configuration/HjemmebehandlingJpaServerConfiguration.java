@@ -76,6 +76,8 @@ public class HjemmebehandlingJpaServerConfiguration extends BaseJavaConfigR4 {
 
     extraProperties.put("hibernate.generate_statistics", "true");
     extraProperties.put(HibernateOrmMapperSettings.ENABLED, "false");
+    //extraProperties.put(spring.datasource.driverClassName=com.mysql.jdbc.Driver
+    extraProperties.put("spring.batch.job.enabled", "false");
     return extraProperties;
   }
 

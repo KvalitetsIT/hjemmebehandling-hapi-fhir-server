@@ -7,7 +7,7 @@
                 <pattern>
                     <pattern>
                         {
-                        "logger": "%logger",
+                        "loggerZZ": "%logger",
                         "level": "%level",
                         "correlation-id": "%X{correlation-id}",
                         "thread": "%thread",
@@ -19,7 +19,7 @@
             </providers>
         </encoder>
     </appender>
-    <logger name="dk.kvalitetsit" level="INFO" additivity="false">
+    <logger name="dk.kvalitetsit" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
     <logger name="ca.uhn.fhir.jpa.search.reindex">

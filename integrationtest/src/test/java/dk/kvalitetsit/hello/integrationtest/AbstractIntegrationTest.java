@@ -48,7 +48,7 @@ public abstract class AbstractIntegrationTest {
         }
     }
 
-    String getApiBasePath() {
+    static String getApiBasePath() {
         return apiBasePath;
     }
 }

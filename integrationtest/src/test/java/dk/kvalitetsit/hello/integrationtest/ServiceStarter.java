@@ -12,6 +12,7 @@ import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
+import java.time.Duration;
 import java.util.Collections;
 
 public class ServiceStarter {
@@ -27,9 +28,13 @@ public class ServiceStarter {
 
         setupDatabaseContainer();
 
-        System.setProperty("JDBC.URL", jdbcUrl);
-        System.setProperty("JDBC.USER", "hellouser");
-        System.setProperty("JDBC.PASS", "secret1234");
+        System.setProperty("base.url", "http://localhost:8080/fhir");
+        System.setProperty("spring.datasource.url", jdbcUrl);
+        System.setProperty("spring.datasource.username", "hapi");
+        System.setProperty("spring.datasource.password", "hapi");
+        System.setProperty("spring.batch.job.enabled", "false");
+        System.setProperty("spring.datasource.driverClassName", "com.mysql.jdbc.Driver");
+        System.setProperty("version", "1.0");
 
         SpringApplication.run((VideoLinkHandlerApplication.class));
     }
@@ -62,16 +67,16 @@ public class ServiceStarter {
 
                 .withEnv("LOG_LEVEL", "INFO")
 
-                .withEnv("JDBC_URL", "jdbc:mysql://mysql:3306/hellodb")
-                .withEnv("JDBC_USER", "hellouser")
-                .withEnv("JDBC_PASS", "secret1234")
+                .withEnv("spring.datasource.url", "jdbc:mysql://mysql:3306/hapi")
+                .withEnv("spring.datasource.username", "hapi")
+                .withEnv("spring.datasource.password", "hapi")
 
                 .withEnv("spring.flyway.locations", "classpath:db/migration,filesystem:/app/sql")
 
 //                .withEnv("JVM_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000")
 
                 .withExposedPorts(8081,8080)
-                .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200));
+                .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200).withStartupTimeout(Duration.ofMinutes(3)));
         service.start();
         attachLogger(serviceLogger, service);
 
@@ -91,9 +96,9 @@ public class ServiceStarter {
     private void setupDatabaseContainer() {
         // Database server for Organisation.
         MySQLContainer mysql = (MySQLContainer) new MySQLContainer("mysql:5.7")
-                .withDatabaseName("hellodb")
-                .withUsername("hellouser")
-                .withPassword("secret1234")
+                .withDatabaseName("hapi")
+                .withUsername("hapi")
+                .withPassword("hapi")
                 .withNetwork(dockerNetwork)
                 .withNetworkAliases("mysql");
         mysql.start();

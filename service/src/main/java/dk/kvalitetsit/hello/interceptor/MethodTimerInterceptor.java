@@ -1,5 +1,6 @@
 package dk.kvalitetsit.hello.interceptor;
 
+import ca.uhn.fhir.rest.api.RestOperationTypeEnum;
 import ca.uhn.fhir.rest.api.server.RequestDetails;
 import ca.uhn.fhir.rest.api.server.ResponseDetails;
 import ca.uhn.fhir.rest.server.exceptions.AuthenticationException;
@@ -41,7 +42,12 @@ public class MethodTimerInterceptor extends InterceptorAdapter {
     List<Tag> tags = new LinkedList<>();
 
     tags.add(Tag.of("type", requestDetails.getRequestType().toString()));
-    tags.add(Tag.of("resource", requestDetails.getResourceName()));
+    if (requestDetails.getRestOperationType() == RestOperationTypeEnum.METADATA) {
+      tags.add(Tag.of("resource", requestDetails.getOperation()));
+    }
+    else {
+      tags.add(Tag.of("resource", requestDetails.getResourceName()));
+    }
 
     return tags;
   }

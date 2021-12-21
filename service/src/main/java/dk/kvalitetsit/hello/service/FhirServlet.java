@@ -8,8 +8,10 @@ import ca.uhn.fhir.jpa.rp.r4.PlanDefinitionResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResponseResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.SearchParameterResourceProvider;
+import ca.uhn.fhir.jpa.rp.r4.BundleResourceProvider;
 
 import ca.uhn.fhir.rest.api.EncodingEnum;
+import ca.uhn.fhir.rest.openapi.OpenApiInterceptor;
 import ca.uhn.fhir.rest.server.HardcodedServerAddressStrategy;
 import ca.uhn.fhir.rest.server.RestfulServer;
 import ca.uhn.fhir.rest.server.interceptor.RequestValidatingInterceptor;
@@ -49,6 +51,8 @@ public class FhirServlet extends RestfulServer {
 
   @Autowired
   private  SearchParameterResourceProvider searchParameterResourceProvider;
+  @Autowired
+  private  BundleResourceProvider bundleResourceProvider;
 
   @Autowired
   private MethodTimerInterceptor methodInterceptor;
@@ -81,6 +85,9 @@ public class FhirServlet extends RestfulServer {
     setDefaultResponseEncoding(EncodingEnum.JSON);
 
     registerInterceptor(methodInterceptor);
+
+    OpenApiInterceptor openApiInterceptor = new OpenApiInterceptor();
+    registerInterceptor(openApiInterceptor);
 
     String serverBaseUrl = configurationValues.getBaseUrl();
     setServerAddressStrategy(new HardcodedServerAddressStrategy(serverBaseUrl));

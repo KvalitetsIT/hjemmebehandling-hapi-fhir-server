@@ -6,6 +6,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class TestApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
-        //new ServiceStarter().startServices();
+        new ServiceStarter().startServices();
     }
 }
