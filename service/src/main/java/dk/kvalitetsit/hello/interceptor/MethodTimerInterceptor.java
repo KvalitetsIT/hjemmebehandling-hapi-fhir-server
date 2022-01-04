@@ -8,6 +8,7 @@ import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Timer;
+import org.hl7.fhir.r4.model.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MethodTimerInterceptor extends InterceptorAdapter {
@@ -44,6 +46,15 @@ public class MethodTimerInterceptor extends InterceptorAdapter {
     tags.add(Tag.of("type", requestDetails.getRequestType().toString()));
     if (requestDetails.getRestOperationType() == RestOperationTypeEnum.METADATA) {
       tags.add(Tag.of("resource", requestDetails.getOperation()));
+    }
+    else if (requestDetails.getRestOperationType() == RestOperationTypeEnum.TRANSACTION) {
+      Bundle bundle = (Bundle)requestDetails.getResource();
+      List<String> resources = bundle.getEntry().stream()
+          .map(e -> e.getResource().getResourceType().toString())
+          .sorted()
+          .collect(Collectors.toList())
+      ;
+      tags.add(Tag.of("bundle_resources", String.join("_", resources)));
     }
     else {
       tags.add(Tag.of("resource", requestDetails.getResourceName()));
