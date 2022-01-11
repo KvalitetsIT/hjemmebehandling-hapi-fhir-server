@@ -49,10 +49,10 @@ public class HelloIT extends AbstractIntegrationTest {
             "http://hl7.org/fhir/StructureDefinition/Organization",
             "http://hl7.org/fhir/StructureDefinition/Patient",
             "http://hl7.org/fhir/StructureDefinition/PlanDefinition",
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
             "http://hl7.org/fhir/StructureDefinition/Questionnaire",
             "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
-            "http://hl7.org/fhir/StructureDefinition/SearchParameter",
-            "http://hl7.org/fhir/StructureDefinition/Practitioner"
+            "http://hl7.org/fhir/StructureDefinition/SearchParameter"
         ));
     }
 }
