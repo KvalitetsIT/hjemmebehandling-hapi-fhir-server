@@ -41,7 +41,7 @@ public class HelloIT extends AbstractIntegrationTest {
             .map(t -> t.getProfile())
             .collect(Collectors.toList());
 
-        assertEquals(8, supportedResources.size());
+        assertEquals(9, supportedResources.size());
 
         assertThat(supportedResources.toString(), supportedResources, Matchers.contains(
             "http://hl7.org/fhir/StructureDefinition/CarePlan",
@@ -51,7 +51,8 @@ public class HelloIT extends AbstractIntegrationTest {
             "http://hl7.org/fhir/StructureDefinition/PlanDefinition",
             "http://hl7.org/fhir/StructureDefinition/Questionnaire",
             "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
-            "http://hl7.org/fhir/StructureDefinition/SearchParameter"
+            "http://hl7.org/fhir/StructureDefinition/SearchParameter",
+            "http://hl7.org/fhir/StructureDefinition/Practitioner"
         ));
     }
 }
