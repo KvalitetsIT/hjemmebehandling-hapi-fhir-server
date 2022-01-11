@@ -6,6 +6,7 @@ import ca.uhn.fhir.jpa.rp.r4.CarePlanResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.PatientResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.OrganizationResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.PlanDefinitionResourceProvider;
+import ca.uhn.fhir.jpa.rp.r4.PractitionerResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResponseResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.SearchParameterResourceProvider;
@@ -38,6 +39,9 @@ public class FhirServlet extends RestfulServer {
   private PatientResourceProvider patientResourceProvider;
 
   @Autowired
+  private PractitionerResourceProvider practitionerResourceProvider;
+
+  @Autowired
   private OrganizationResourceProvider organizationResourceProvider;
 
   @Autowired
@@ -66,7 +70,7 @@ public class FhirServlet extends RestfulServer {
     FhirContext ctx = FhirContext.forR4();
     setFhirContext(ctx);
 
-    setResourceProviders(Arrays.asList(carePlanResourceProvider, patientResourceProvider, organizationResourceProvider, planDefinitionResourceProvider, questionnaireResourceProvider, questionnaireResponseResourceProvider, searchParameterResourceProvider));
+    setResourceProviders(Arrays.asList(carePlanResourceProvider, patientResourceProvider, practitionerResourceProvider, organizationResourceProvider, planDefinitionResourceProvider, questionnaireResourceProvider, questionnaireResponseResourceProvider, searchParameterResourceProvider));
     registerProvider(jpaSystemProvider); // handles system level transaction. (Bundle that consists of a number of resources to be created in one transaction)
 
     // Create an interceptor to validate incoming requests
