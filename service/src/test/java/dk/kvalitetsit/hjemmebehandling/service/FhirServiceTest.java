@@ -1,25 +1,15 @@
-package dk.kvalitetsit.hello.service;
+package dk.kvalitetsit.hjemmebehandling.service;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.gclient.IFetchConformanceTyped;
-import ca.uhn.fhir.rest.gclient.IFetchConformanceUntyped;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.hamcrest.Matchers;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CapabilityStatement;
-import org.hl7.fhir.r4.model.CarePlan;
-import org.hl7.fhir.r4.model.Patient;
 import org.junit.Before;
-import org.junit.Test;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

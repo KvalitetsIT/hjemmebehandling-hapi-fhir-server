@@ -1,4 +1,4 @@
-package dk.kvalitetsit.hello.provider;
+package dk.kvalitetsit.hjemmebehandling.provider;
 
 import org.springframework.transaction.annotation.Transactional;
 

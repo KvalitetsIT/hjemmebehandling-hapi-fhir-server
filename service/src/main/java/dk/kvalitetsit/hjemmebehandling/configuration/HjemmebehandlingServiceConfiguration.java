@@ -1,7 +1,7 @@
-package dk.kvalitetsit.hello.configuration;
+package dk.kvalitetsit.hjemmebehandling.configuration;
 
-import dk.kvalitetsit.hello.service.FhirServlet;
-import dk.kvalitetsit.hello.service.HealthServlet;
+import dk.kvalitetsit.hjemmebehandling.service.FhirServlet;
+import dk.kvalitetsit.hjemmebehandling.service.HealthServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

@@ -1,11 +1,11 @@
-package dk.kvalitetsit.hello.configuration;
+package dk.kvalitetsit.hjemmebehandling.configuration;
 
 import ca.uhn.fhir.context.ConfigurationException;
 import ca.uhn.fhir.jpa.api.config.DaoConfig;
 import ca.uhn.fhir.jpa.config.BaseJavaConfigR4;
 import ca.uhn.fhir.jpa.model.config.PartitionSettings;
 import ca.uhn.fhir.jpa.model.entity.ModelConfig;
-import dk.kvalitetsit.hello.interceptor.MethodTimerInterceptor;
+import dk.kvalitetsit.hjemmebehandling.interceptor.MethodTimerInterceptor;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +64,7 @@ public class HjemmebehandlingJpaServerConfiguration extends BaseJavaConfigR4 {
     //extraProperties.put("url", "jdbc:h2:file:./target/database/h2");
 
     extraProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
-    //extraProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
     extraProperties.put("hibernate.format_sql", "true");
-//		extraProperties.put("hibernate.show_sql", "true");
     extraProperties.put("hibernate.hbm2ddl.auto", "update");
     extraProperties.put("hibernate.jdbc.batch_size", "20");
     extraProperties.put("hibernate.cache.use_query_cache", "false");
@@ -78,6 +76,7 @@ public class HjemmebehandlingJpaServerConfiguration extends BaseJavaConfigR4 {
     extraProperties.put(HibernateOrmMapperSettings.ENABLED, "false");
     //extraProperties.put(spring.datasource.driverClassName=com.mysql.jdbc.Driver
     extraProperties.put("spring.batch.job.enabled", "false");
+    extraProperties.put("elasticsearch.enabled", "false");
     return extraProperties;
   }
 

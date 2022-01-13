@@ -16,13 +16,13 @@ if [[ -z $LOG_LEVEL ]]; then
 fi
 
 if [[ -z $HAPI_LOG_LEVEL ]]; then
-  echo "Default HAPI_LOG_LEVEL = INFO"
-  export HAPI_LOG_LEVEL=INFO
+  echo "Default HAPI_LOG_LEVEL = WARN"
+  export HAPI_LOG_LEVEL=WARN
 fi
 
 if [[ -z $HIBERNATE_LOG_LEVEL ]]; then
-  echo "Default HIBERNATE_LOG_LEVEL = INFO"
-  export HIBERNATE_LOG_LEVEL=INFO
+  echo "Default HIBERNATE_LOG_LEVEL = ERROR"
+  export HIBERNATE_LOG_LEVEL=ERROR
 fi
 
 if [[ -z $LOG_LEVEL_FRAMEWORK ]]; then

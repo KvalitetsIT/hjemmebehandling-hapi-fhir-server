@@ -1,4 +1,4 @@
-package dk.kvalitetsit.hello.interceptor;
+package dk.kvalitetsit.hjemmebehandling.interceptor;
 
 import ca.uhn.fhir.rest.api.RestOperationTypeEnum;
 import ca.uhn.fhir.rest.api.server.RequestDetails;

@@ -1,7 +1,7 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hjemmebehandling.integrationtest;
 
 import com.github.dockerjava.api.model.VolumesFrom;
-import dk.kvalitetsit.hello.VideoLinkHandlerApplication;
+import dk.kvalitetsit.hjemmebehandling.HapiFhirServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -34,9 +34,12 @@ public class ServiceStarter {
         System.setProperty("spring.datasource.password", "hapi");
         System.setProperty("spring.batch.job.enabled", "false");
         System.setProperty("spring.datasource.driverClassName", "com.mysql.jdbc.Driver");
+        System.setProperty("spring.batch.job.enabled", "false");
+        System.setProperty("elasticsearch.enabled", "false");
+        System.setProperty("spring.autoconfigure.exclude", "org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration");
         System.setProperty("version", "1.0");
 
-        SpringApplication.run((VideoLinkHandlerApplication.class));
+        SpringApplication.run((HapiFhirServer.class));
     }
 
     public GenericContainer startServicesInDocker() {

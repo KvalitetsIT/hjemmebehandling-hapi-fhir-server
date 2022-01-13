@@ -1,4 +1,4 @@
-package dk.kvalitetsit.hello.service;
+package dk.kvalitetsit.hjemmebehandling.service;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.jpa.provider.IJpaSystemProvider;
@@ -12,14 +12,13 @@ import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResponseResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.SearchParameterResourceProvider;
 
 import ca.uhn.fhir.rest.api.EncodingEnum;
-import ca.uhn.fhir.rest.openapi.OpenApiInterceptor;
+//import ca.uhn.fhir.rest.openapi.OpenApiInterceptor;
 import ca.uhn.fhir.rest.server.HardcodedServerAddressStrategy;
 import ca.uhn.fhir.rest.server.RestfulServer;
-import ca.uhn.fhir.rest.server.interceptor.RequestValidatingInterceptor;
-import ca.uhn.fhir.validation.ResultSeverityEnum;
-import dk.kvalitetsit.hello.configuration.HjemmebehandlingServiceConfiguration;
-import dk.kvalitetsit.hello.interceptor.MethodTimerInterceptor;
-import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
+//import ca.uhn.fhir.rest.server.interceptor.RequestValidatingInterceptor;
+import dk.kvalitetsit.hjemmebehandling.configuration.HjemmebehandlingServiceConfiguration;
+import dk.kvalitetsit.hjemmebehandling.interceptor.MethodTimerInterceptor;
+//import org.hl7.fhir.common.hapi.validation.validator.FhirInstanceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -74,15 +73,15 @@ public class FhirServlet extends RestfulServer {
     registerProvider(jpaSystemProvider); // handles system level transaction. (Bundle that consists of a number of resources to be created in one transaction)
 
     // Create an interceptor to validate incoming requests
-    RequestValidatingInterceptor requestInterceptor = new RequestValidatingInterceptor();
+//    RequestValidatingInterceptor requestInterceptor = new RequestValidatingInterceptor();
 
     // Register a validator module (you could also use SchemaBaseValidator and/or SchematronBaseValidator)
-    requestInterceptor.addValidatorModule(new FhirInstanceValidator(ctx));
+//    requestInterceptor.addValidatorModule(new FhirInstanceValidator(ctx));
 
-    requestInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-    requestInterceptor.setAddResponseHeaderOnSeverity(ResultSeverityEnum.INFORMATION);
-    requestInterceptor.setResponseHeaderValue("Validation on ${line}: ${message} ${severity}");
-    requestInterceptor.setResponseHeaderValueNoIssues("No issues detected");
+//    requestInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+//    requestInterceptor.setAddResponseHeaderOnSeverity(ResultSeverityEnum.INFORMATION);
+//    requestInterceptor.setResponseHeaderValue("Validation on ${line}: ${message} ${severity}");
+//    requestInterceptor.setResponseHeaderValueNoIssues("No issues detected");
 
     // Now register the validating interceptor
 //    registerInterceptor(requestInterceptor);
@@ -92,8 +91,8 @@ public class FhirServlet extends RestfulServer {
 
     registerInterceptor(methodInterceptor);
 
-    OpenApiInterceptor openApiInterceptor = new OpenApiInterceptor();
-    registerInterceptor(openApiInterceptor);
+//    OpenApiInterceptor openApiInterceptor = new OpenApiInterceptor();
+//    registerInterceptor(openApiInterceptor);
 
     String serverBaseUrl = configurationValues.getBaseUrl();
     setServerAddressStrategy(new HardcodedServerAddressStrategy(serverBaseUrl));

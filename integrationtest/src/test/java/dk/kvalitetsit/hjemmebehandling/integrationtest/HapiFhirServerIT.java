@@ -1,33 +1,23 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hjemmebehandling.integrationtest;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hamcrest.Matchers;
 import org.hl7.fhir.r4.model.CapabilityStatement;
-import org.hl7.fhir.r4.model.CarePlan;
 import org.junit.Test;
-import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
-import org.openapitools.client.api.KithugsApi;
-import org.openapitools.client.model.HelloRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
-public class HelloIT extends AbstractIntegrationTest {
+public class HapiFhirServerIT extends AbstractIntegrationTest {
 
     private final IGenericClient client;
 
-    public HelloIT() {
-//        var apiClient = new ApiClient();
-//        apiClient.setBasePath(getApiBasePath());
-//
-//        helloApi = new KithugsApi(apiClient);
-
+    public HapiFhirServerIT() {
         FhirContext ctx = FhirContext.forR4();
         client = ctx.newRestfulGenericClient(getApiBasePath() + "/fhir");
     }
