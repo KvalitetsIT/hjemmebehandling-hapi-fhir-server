@@ -10,6 +10,8 @@ import ca.uhn.fhir.jpa.rp.r4.PractitionerResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.QuestionnaireResponseResourceProvider;
 import ca.uhn.fhir.jpa.rp.r4.SearchParameterResourceProvider;
+import ca.uhn.fhir.jpa.rp.r4.CodeSystemResourceProvider;
+import ca.uhn.fhir.jpa.rp.r4.ValueSetResourceProvider;
 
 import ca.uhn.fhir.rest.api.EncodingEnum;
 //import ca.uhn.fhir.rest.openapi.OpenApiInterceptor;
@@ -56,6 +58,12 @@ public class FhirServlet extends RestfulServer {
   private  SearchParameterResourceProvider searchParameterResourceProvider;
 
   @Autowired
+  private CodeSystemResourceProvider codeSystemResourceProvider;
+
+  @Autowired
+  private  ValueSetResourceProvider valueSetResourceProvider;
+
+  @Autowired
   private MethodTimerInterceptor methodInterceptor;
 
   @Autowired
@@ -69,7 +77,17 @@ public class FhirServlet extends RestfulServer {
     FhirContext ctx = FhirContext.forR4();
     setFhirContext(ctx);
 
-    setResourceProviders(Arrays.asList(carePlanResourceProvider, patientResourceProvider, practitionerResourceProvider, organizationResourceProvider, planDefinitionResourceProvider, questionnaireResourceProvider, questionnaireResponseResourceProvider, searchParameterResourceProvider));
+    setResourceProviders(
+        Arrays.asList(carePlanResourceProvider,
+            patientResourceProvider,
+            practitionerResourceProvider,
+            organizationResourceProvider,
+            planDefinitionResourceProvider,
+            questionnaireResourceProvider,
+            questionnaireResponseResourceProvider,
+            searchParameterResourceProvider,
+            codeSystemResourceProvider,
+            valueSetResourceProvider));
     registerProvider(jpaSystemProvider); // handles system level transaction. (Bundle that consists of a number of resources to be created in one transaction)
 
     // Create an interceptor to validate incoming requests
