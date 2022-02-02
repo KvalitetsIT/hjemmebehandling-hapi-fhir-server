@@ -31,10 +31,11 @@ public class HapiFhirServerIT extends AbstractIntegrationTest {
             .map(t -> t.getProfile())
             .collect(Collectors.toList());
 
-        assertEquals(9, supportedResources.size());
+        assertEquals(11, supportedResources.size());
 
         assertThat(supportedResources.toString(), supportedResources, Matchers.contains(
             "http://hl7.org/fhir/StructureDefinition/CarePlan",
+            "http://hl7.org/fhir/StructureDefinition/CodeSystem",
             "http://hl7.org/fhir/StructureDefinition/OperationDefinition",
             "http://hl7.org/fhir/StructureDefinition/Organization",
             "http://hl7.org/fhir/StructureDefinition/Patient",
@@ -42,7 +43,8 @@ public class HapiFhirServerIT extends AbstractIntegrationTest {
             "http://hl7.org/fhir/StructureDefinition/Practitioner",
             "http://hl7.org/fhir/StructureDefinition/Questionnaire",
             "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
-            "http://hl7.org/fhir/StructureDefinition/SearchParameter"
+            "http://hl7.org/fhir/StructureDefinition/SearchParameter",
+            "http://hl7.org/fhir/StructureDefinition/ValueSet"
         ));
     }
 }
