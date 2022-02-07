@@ -1,30 +1,44 @@
 ![Build Status](https://github.com/KvalitetsIT/hjemmebehandling-hapi-fhir-server/workflows/CICD/badge.svg) ![Test Coverage](.github/badges/jacoco.svg)
 # hjemmebehandling-hapi-fhir-server
 
-Template repository showing how to be a good Java Spring Boot citizen in a k8s cluster.
+The hapi-fhir-server-bff is a build of a standard Hapi Fhir server. This service works as an api server for both the patient- and employee BFFs   
 
-## A good citizen
+The service is a Java Spring Boot application with the following properties
 
-Below is a set of recommendations for being a good service. The recommendations are not tied to a specific language or 
-framework.
+1. Exposes REST interfaces 
+3. Is a FHIR server
+4. Exposes metrics url for prometheus to scrape
 
-1. Configuration through environment variables.
-2. Expose readiness endpoint
-3. Expose endpoint that Prometheus can scrape
-4. Be stateless
-5. Support multiple instances
-6. Always be in a releasable state
-7. Automate build and deployment.
+## Prerequesites
+To build the project you need:
 
-Some of above recommendations are heavily inspired by [https://12factor.net/](https://12factor.net/). It is recommended 
-read [https://12factor.net/](https://12factor.net/) for more inspiration and further details. Some points go 
-further than just being a good service and also touches areas like operations.
+ * OpenJDK 11+
+ * Maven 3.1.1+
+ * Docker 20+
+ * Docker-compose 1.29+
 
-## Getting started
+## Building the service
 
-Run `./setup.sh GIT_REPOSITORY_NAME`.
+The simplest way to build the service is to use maven:
 
-Above does a search/replace in relevant files. 
+```
+mvn clean install
+```
+
+This will build the service as a JAR used by spring boot.
+
+## Running the service
+Use the local docker-compose setup
+
+```
+cd compose/
+docker-compose up
+```
+This will start the hapi server and the bff.
+
+## Logging
+
+The service uses Logback for logging. At runtime Logback log levels can be configured via environment variable.
 
 ## Endpoints
 
@@ -32,8 +46,10 @@ The service is listening for connections on port 8080.
 
 Spring boot actuator is listening for connections on port 8081. This is used as prometheus scrape endpoint and health monitoring. 
 
-Prometheus scrape endpoint: `http://localhost:8081/actuator/prometheus`  
-Health URL that can be used for readiness probe: `http://localhost:8081/actuator/health`
+Prometheus scrape endpoint: `http://localhost:8083/actuator/prometheus`  
+Health URL that can be used for readiness probe: `http://localhost:8083/actuator/health`. 
+
+In DIAS the `http://localhost:8082/fhir/metadata` is used for health.
 
 ## Configuration
 
