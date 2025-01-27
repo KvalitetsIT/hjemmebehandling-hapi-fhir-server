@@ -24,7 +24,7 @@ import dk.kvalitetsit.hjemmebehandling.interceptor.MethodTimerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import java.util.Arrays;
 
 public class FhirServlet extends RestfulServer {

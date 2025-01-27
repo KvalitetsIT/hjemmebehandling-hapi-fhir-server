@@ -12,8 +12,8 @@ import org.hl7.fhir.r4.model.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +39,7 @@ public class MethodTimerInterceptor extends InterceptorAdapter {
 
     return true;
   }
+
 
   private Iterable<Tag> getTags(RequestDetails requestDetails) {
     List<Tag> tags = new LinkedList<>();

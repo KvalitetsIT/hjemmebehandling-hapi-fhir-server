@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MySQLContainer;
+
 import org.testcontainers.containers.Network;
+import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
@@ -33,7 +34,7 @@ public class ServiceStarter {
         System.setProperty("spring.datasource.username", "hapi");
         System.setProperty("spring.datasource.password", "hapi");
         System.setProperty("spring.batch.job.enabled", "false");
-        System.setProperty("spring.datasource.driverClassName", "com.mysql.jdbc.Driver");
+        System.setProperty("spring.datasource.driverClassName", "org.postgresql.Driver");
         System.setProperty("spring.batch.job.enabled", "false");
         System.setProperty("elasticsearch.enabled", "false");
         System.setProperty("spring.autoconfigure.exclude", "org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration");
@@ -70,7 +71,7 @@ public class ServiceStarter {
 
                 .withEnv("LOG_LEVEL", "INFO")
 
-                .withEnv("spring.datasource.url", "jdbc:mysql://mysql:3306/hapi")
+                .withEnv("spring.datasource.url", "jdbc:postgres://mysql:3306/hapi")
                 .withEnv("spring.datasource.username", "hapi")
                 .withEnv("spring.datasource.password", "hapi")
 
@@ -98,10 +99,13 @@ public class ServiceStarter {
 
     private void setupDatabaseContainer() {
         // Database server for Organisation.
-        MySQLContainer mysql = (MySQLContainer) new MySQLContainer("mysql:5.7")
+
+        PostgreSQLContainer mysql = new PostgreSQLContainer("postgres:16.0")
                 .withDatabaseName("hapi")
                 .withUsername("hapi")
-                .withPassword("hapi")
+                .withPassword("hapi");
+
+        mysql
                 .withNetwork(dockerNetwork)
                 .withNetworkAliases("mysql");
         mysql.start();
