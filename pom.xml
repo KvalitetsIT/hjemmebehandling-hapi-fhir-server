@@ -4,21 +4,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 
-	<!-- <repositories> -->
-		<!-- <repository> -->
-			<!-- <id>Central</id> -->
-			<!-- <url>https://repo1.maven.org/maven2</url> -->
-		<!-- </repository> -->
-		<!-- <repository> -->
-			<!-- <id>github-public</id> -->
-			<!-- <url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url> -->
-		<!-- </repository> -->
-		<!-- <repository> -->
-			<!-- <id>github-public1</id> -->
-			<!-- <url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url> -->
-		<!-- </repository> -->
-	<!-- </repositories> -->
-
 	<modules>
 		<module>web</module>
 		<module>service</module>
