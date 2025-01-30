@@ -19,15 +19,17 @@ import java.util.Collections;
 public class ServiceStarter {
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
     private static final Logger serviceLogger = LoggerFactory.getLogger("hjemmebehandling-hapi-fhir-server");
-    private static final Logger mysqlLogger = LoggerFactory.getLogger("mysql");
+    private static final Logger postgresqlLogger = LoggerFactory.getLogger("postgresql");
 
     private Network dockerNetwork;
     private String jdbcUrl;
 
     public void startServices() {
+        logger.info("Starting services...");
         dockerNetwork = Network.newNetwork();
 
         setupDatabaseContainer();
+        logger.info("Database successfully started");
 
         System.setProperty("base.url", "http://localhost:8080/fhir");
         System.setProperty("spring.datasource.url", jdbcUrl);
@@ -71,7 +73,7 @@ public class ServiceStarter {
 
                 .withEnv("LOG_LEVEL", "INFO")
 
-                .withEnv("spring.datasource.url", "jdbc:postgres://mysql:3306/hapi")
+                .withEnv("spring.datasource.url", "jdbc:postgresql://postgresql:3306/hapi")
                 .withEnv("spring.datasource.username", "hapi")
                 .withEnv("spring.datasource.password", "hapi")
 
@@ -99,18 +101,17 @@ public class ServiceStarter {
 
     private void setupDatabaseContainer() {
         // Database server for Organisation.
-
-        PostgreSQLContainer mysql = new PostgreSQLContainer("postgres:16.0")
+        PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>("postgres:16-alpine")
                 .withDatabaseName("hapi")
                 .withUsername("hapi")
                 .withPassword("hapi");
 
-        mysql
+        postgresql
                 .withNetwork(dockerNetwork)
-                .withNetworkAliases("mysql");
-        mysql.start();
-        jdbcUrl = mysql.getJdbcUrl();
-        attachLogger(mysqlLogger, mysql);
+                .withNetworkAliases("postgresql");
+        postgresql.start();
+        jdbcUrl = postgresql.getJdbcUrl();
+        attachLogger(postgresqlLogger, postgresql);
     }
 
     private void attachLogger(Logger logger, GenericContainer container) {

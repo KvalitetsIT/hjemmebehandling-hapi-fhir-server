@@ -4,12 +4,9 @@ import ca.uhn.fhir.context.ConfigurationException;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.jpa.api.config.JpaStorageSettings;
-import ca.uhn.fhir.jpa.api.config.ThreadPoolFactoryConfig;
 import ca.uhn.fhir.jpa.config.r4.JpaR4Config;
 import ca.uhn.fhir.jpa.config.util.HapiEntityManagerFactoryUtil;
 import ca.uhn.fhir.jpa.model.config.PartitionSettings;
-//import ca.uhn.fhir.jpa.model.entity.ModelConfig;
-import ca.uhn.fhir.jpa.search.DatabaseBackedPagingProvider;
 import dk.kvalitetsit.hjemmebehandling.interceptor.MethodTimerInterceptor;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings;
@@ -19,7 +16,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-//import ca.uhn.fhir.jpa.config.BaseJavaConfigR4;
+
 
 
 import jakarta.persistence.EntityManagerFactory;

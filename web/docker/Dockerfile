@@ -10,7 +10,7 @@ COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 COPY config/logback.xml logback-spring.xml
-COPY /maven/web-exec.jar web.jar
+COPY /maven/web.jar web.jar
 
 EXPOSE 8080
 EXPOSE 8081

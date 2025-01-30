@@ -24,17 +24,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring_boot_version}</version>
         </dependency>
 
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- Test dependencies -->
@@ -87,7 +82,7 @@
                                     <inline>
                                         <files>
                                             <file>
-                                                <source>${project.build.directory}/web-exec.jar</source>
+                                                <source>${project.build.directory}/web.jar</source>
                                             </file>
                                         </files>
                                     </inline>

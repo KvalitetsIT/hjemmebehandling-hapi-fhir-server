@@ -4,8 +4,10 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hamcrest.Matchers;
 import org.hl7.fhir.r4.model.CapabilityStatement;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openapitools.client.ApiException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,17 +18,19 @@ import static org.junit.Assert.assertEquals;
 public class HapiFhirServerIT extends AbstractIntegrationTest {
 
     private final IGenericClient client;
+    private final Logger logger = LoggerFactory.getLogger(HapiFhirServerIT.class);
 
     public HapiFhirServerIT() {
+        logger.info("testssssss");
         FhirContext ctx = FhirContext.forR4();
         client = ctx.newRestfulGenericClient(getApiBasePath() + "/fhir");
     }
 
     @Test
     public void testHapiServerConformance() throws ApiException {
+        logger.info("testHapiServerConformance");
         CapabilityStatement cs = client.capabilities().ofType(CapabilityStatement.class).execute();
         CapabilityStatement.CapabilityStatementRestResourceComponent resource = cs.getRest().get(0).getResource().get(0);
-
         List<String> supportedResources = cs.getRest().get(0).getResource().stream()
             .map(t -> t.getProfile())
             .collect(Collectors.toList());
