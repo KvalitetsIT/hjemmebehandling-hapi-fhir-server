@@ -23,7 +23,6 @@
     <description>KITHUGS service</description>
 
     <properties>
-
         <jakarta-validation.version>3.0.2</jakarta-validation.version>
         <java.version>21</java.version>
         <testcontainers.version>1.20.4</testcontainers.version>
@@ -43,6 +42,75 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-jpaserver-base</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-jpaserver-test-utilities</artifactId>
+                <version>${hapi.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.sun.xml.bind</groupId>
+                        <artifactId>jaxb-impl</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-server-openapi</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-core -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-core</artifactId>
+                <version>1.13.3</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>1.13.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>5.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-base</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+
             <!-- Modules in project -->
             <dependency>
                 <groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
@@ -74,7 +142,6 @@
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>6.3</version>
             </dependency>
-
 
 
             <dependency>
@@ -185,7 +252,6 @@
                 <artifactId>spring-boot-starter-validation</artifactId>
                 <version>${spring_boot_version}</version>
             </dependency>
-
 
 
         </dependencies>

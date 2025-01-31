@@ -21,7 +21,6 @@ public class HapiFhirServerIT extends AbstractIntegrationTest {
     private final Logger logger = LoggerFactory.getLogger(HapiFhirServerIT.class);
 
     public HapiFhirServerIT() {
-        logger.info("testssssss");
         FhirContext ctx = FhirContext.forR4();
         client = ctx.newRestfulGenericClient(getApiBasePath() + "/fhir");
     }
@@ -32,7 +31,7 @@ public class HapiFhirServerIT extends AbstractIntegrationTest {
         CapabilityStatement cs = client.capabilities().ofType(CapabilityStatement.class).execute();
         CapabilityStatement.CapabilityStatementRestResourceComponent resource = cs.getRest().get(0).getResource().get(0);
         List<String> supportedResources = cs.getRest().get(0).getResource().stream()
-            .map(t -> t.getProfile())
+            .map(CapabilityStatement.CapabilityStatementRestResourceComponent::getProfile)
             .collect(Collectors.toList());
 
         assertEquals(11, supportedResources.size());

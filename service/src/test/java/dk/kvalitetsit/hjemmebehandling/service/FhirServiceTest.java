@@ -9,22 +9,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static io.micrometer.core.instrument.util.StringUtils.isNotBlank;
+import static io.micrometer.common.util.StringUtils.isNotBlank;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FhirServiceTest {
 
-    private static FhirServlet helloService;
-
-    @BeforeAll
-    public static void setup() {
-        helloService = new FhirServlet();
-    }
+//    private static FhirServlet helloService;
+//
+//    @BeforeAll
+//    public static void setup() {
+//        helloService = new FhirServlet();
+//    }
 
 //    @Test
 //    public void testValidInput() {
@@ -37,25 +36,25 @@ public class FhirServiceTest {
 //        assertEquals(input.getName(), result.getName());
 //    }
 
-    @Test
-    public void testme() {
-        FhirContext ctx = FhirContext.forR4();
-        IGenericClient client = ctx.newRestfulGenericClient("http://localhost:8080/fhir");
-        try {
-            Bundle results = client
-                .search()
-                .forResource("nogetsludder")
-                //.forResource(Patient.class)
-                //.where(Patient.FAMILY.matches().value("duck"))
-                .returnBundle(Bundle.class)
-                .execute();
-            System.out.println("Found " + results.getEntry().size() + " patients named 'duck'");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+//    @Test
+//    public void testme() {
+//        FhirContext ctx = FhirContext.forR4();
+//        IGenericClient client = ctx.newRestfulGenericClient("http://localhost:8080/fhir");
+//        try {
+//            Bundle results = client
+//                .search()
+//                .forResource("nogetsludder")
+//                //.forResource(Patient.class)
+//                //.where(Patient.FAMILY.matches().value("duck"))
+//                .returnBundle(Bundle.class)
+//                .execute();
+//            System.out.println("Found " + results.getEntry().size() + " patients named 'duck'");
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
 //    @Test
 //    public void conformanceCheck() {
 //        FhirContext ctx = FhirContext.forR4();
