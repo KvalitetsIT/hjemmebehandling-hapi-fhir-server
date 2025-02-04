@@ -214,7 +214,7 @@
             <dependency>
                 <groupId>org.jacoco</groupId>
                 <artifactId>org.jacoco.agent</artifactId>
-                <version>0.8.12</version>
+                <version>0.8.9</version>
             </dependency>
 
             <!-- Integration test client dependencies -->

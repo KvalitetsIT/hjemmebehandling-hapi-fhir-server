@@ -84,6 +84,7 @@
                                 <tags>
                                     <tag>latest</tag>
                                     <tag>dev</tag>
+                                    <!--suppress UnresolvedMavenProperty -->
                                     <tag>${git.commit.id}</tag>
                                 </tags>
                                 <dockerFileDir>${basedir}/docker</dockerFileDir>
