@@ -45,9 +45,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <classifier>exec</classifier>
-                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                            <mainClass>
+                                dk.kvalitetsit.hjemmebehandling.HapiFhirServer
+                            </mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -81,7 +91,7 @@
                                     <inline>
                                         <files>
                                             <file>
-                                                <source>${project.build.directory}/web.jar</source>
+                                                <source>${project.build.directory}/web-exec.jar</source>
                                             </file>
                                         </files>
                                     </inline>

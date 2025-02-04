@@ -24,7 +24,7 @@ services:
   helloservice:
     image: kvalitetsit/hjemmebehandling-hapi-fhir-server:latest
     environment:
-      - jdbc_url=jdbc:postgresql://postgresql:3306/hellodb
+      - jdbc_url=jdbc:postgresql://postgresql:5432/hellodb
       - jdbc_user=hellouser
       - jdbc_pass=secret1234
       - usercontext_header_name=X-Test-Auth

@@ -73,7 +73,7 @@ public class ServiceStarter {
 
                 .withEnv("LOG_LEVEL", "INFO")
 
-                .withEnv("spring.datasource.url", "jdbc:postgresql://postgresql:3306/hapi")
+                .withEnv("spring.datasource.url", "jdbc:postgresql://postgresql:5432/hapi")
                 .withEnv("spring.datasource.username", "hapi")
                 .withEnv("spring.datasource.password", "hapi")
 
