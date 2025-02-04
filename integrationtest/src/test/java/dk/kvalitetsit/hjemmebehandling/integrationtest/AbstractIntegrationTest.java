@@ -35,10 +35,9 @@ public abstract class AbstractIntegrationTest {
     private static void setup() throws IOException, URISyntaxException {
         var runInDocker = Boolean.getBoolean("runInDocker");
         logger.info("Running integration test in docker container: {}", runInDocker);
-
         ServiceStarter serviceStarter;
         serviceStarter = new ServiceStarter();
-        if(false) {
+        if(runInDocker) {
             helloService = serviceStarter.startServicesInDocker();
             apiBasePath = "http://" + helloService.getHost() + ":" + helloService.getMappedPort(8080);
         }

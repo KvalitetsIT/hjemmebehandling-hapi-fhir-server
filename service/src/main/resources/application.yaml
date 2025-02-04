@@ -106,7 +106,7 @@ hapi:
           # require_from_keyword: false
           # disable_default_model_info_load: false
         runtime:
-          debug_logging_enabled: false
+          debug_logging_enabled: true
           # enable_validation: false
           # enable_expression_caching: true
         terminology:

@@ -18,8 +18,7 @@ import java.util.Collections;
 
 public class ServiceStarter {
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
-    private static final Logger serviceLogger = LoggerFactory.getLogger("hjemmebehandling-hapi-fhir-server");
-    private static final Logger postgresqlLogger = LoggerFactory.getLogger("postgresql");
+
 
     private Network dockerNetwork;
     private String jdbcUrl;
@@ -72,8 +71,7 @@ public class ServiceStarter {
                 .withNetworkAliases("hjemmebehandling-hapi-fhir-server")
 
                 .withEnv("LOG_LEVEL", "INFO")
-
-                .withEnv("spring.datasource.url", "jdbc:postgresql://postgresql:5432/hapi")
+                .withEnv("spring.datasource.url", "jdbc:postgresql://postgres:5432/hapi")
                 .withEnv("spring.datasource.username", "hapi")
                 .withEnv("spring.datasource.password", "hapi")
 
@@ -82,9 +80,9 @@ public class ServiceStarter {
 //                .withEnv("JVM_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000")
 
                 .withExposedPorts(8081, 8080)
-                .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200).withStartupTimeout(Duration.ofMinutes(3)));
+                .waitingFor(Wait.forHttp("/fhir/metadata").forPort(8080).forStatusCode(200).withStartupTimeout(Duration.ofMinutes(3)));
         service.start();
-        attachLogger(serviceLogger, service);
+        attachLogger("fhir", service);
 
         return service;
     }
@@ -103,18 +101,17 @@ public class ServiceStarter {
         PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>("postgres:16-alpine")
                 .withDatabaseName("hapi")
                 .withUsername("hapi")
-                .withPassword("hapi");
-
-        postgresql.withNetwork(dockerNetwork)
-                .withNetworkAliases("postgresql");
+                .withPassword("hapi")
+                .withNetwork(dockerNetwork)
+                .withNetworkAliases("postgres");
         postgresql.start();
         jdbcUrl = postgresql.getJdbcUrl();
-        attachLogger(postgresqlLogger, postgresql);
+        attachLogger("postgres", postgresql);
     }
 
-    private void attachLogger(Logger logger, GenericContainer container) {
+    private void attachLogger(String prefix, GenericContainer container) {
         ServiceStarter.logger.info("Attaching logger to container: " + container.getContainerInfo().getName());
-        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger);
+        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger).withPrefix(prefix);
         container.followOutput(logConsumer);
     }
 }
