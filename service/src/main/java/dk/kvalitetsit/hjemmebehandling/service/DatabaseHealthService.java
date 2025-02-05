@@ -18,18 +18,13 @@ public class DatabaseHealthService {
 
   public boolean isHealthy() {
     try {
-      Connection connection = dataSource.getConnection();
-      try {
-        connection.createStatement().executeQuery("select 1");
-        return true;
-      }
-      catch(Exception e) {
-        logger.error("Error quering database for health check.", e);
-        return false;
-      }
-      finally {
-        connection.close();
-      }
+        try (Connection connection = dataSource.getConnection()) {
+            connection.createStatement().executeQuery("select 1");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error quering database for health check.", e);
+            return false;
+        }
     }
     catch(Exception e) {
       logger.error("Error getting connection for database query.", e);

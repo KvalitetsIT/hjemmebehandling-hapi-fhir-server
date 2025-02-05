@@ -181,9 +181,11 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
+
+        <!-- Actuator so it possible to get metrics -->
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
+            <groupId>dk.kvalitetsit</groupId>
+            <artifactId>spring-prometheus-app-info</artifactId>
         </dependency>
 
 

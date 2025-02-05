@@ -34,4 +34,4 @@ services:
       - POSTGRES_ROOT_PASSWORD=hapi
       - POSTGRES_DATABASE=hapi
     ports:
-      - 3306:3306
+      - 5432:5432

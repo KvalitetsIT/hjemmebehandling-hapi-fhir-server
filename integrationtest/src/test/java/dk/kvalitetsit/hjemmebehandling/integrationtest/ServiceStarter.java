@@ -76,9 +76,6 @@ public class ServiceStarter {
                 .withEnv("spring.datasource.password", "hapi")
 
                 .withEnv("spring.flyway.locations", "classpath:db/migration,filesystem:/app/sql")
-
-//                .withEnv("JVM_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000")
-
                 .withExposedPorts(8081, 8080)
                 .waitingFor(Wait.forHttp("/fhir/metadata").forPort(8080).forStatusCode(200).withStartupTimeout(Duration.ofMinutes(3)));
         service.start();
