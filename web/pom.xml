@@ -74,6 +74,7 @@
                             <name>kvalitetsit/hjemmebehandling-hapi-fhir-server</name>
                             <build>
                                 <tags>
+                                    <tag>postgres</tag>
                                     <tag>latest</tag>
                                     <tag>dev</tag>
                                     <tag>${git.commit.id}</tag>
