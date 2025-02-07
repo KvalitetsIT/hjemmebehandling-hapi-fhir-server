@@ -4,20 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 
-	<repositories>
-		<repository>
-			<id>Central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
-			<id>github-public</id>
-			<url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url>
-		</repository>
-		<repository>
-			<id>github-public1</id>
-			<url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url>
-		</repository>
-	</repositories>
+
+
 
 	<modules>
 		<module>web</module>
@@ -40,7 +28,6 @@
 	<properties>
 		<java.version>11</java.version>
 		<testcontainers.version>1.15.1</testcontainers.version>
-		<spring-prometheus-app-info-version>1.0.3</spring-prometheus-app-info-version>
 		<hapi.version>5.6.1</hapi.version>
 	</properties>
 
@@ -86,19 +73,7 @@
 				<version>6.3</version>
 			</dependency>
 
-			<!-- Actuator and prometheus -->
-			<dependency>
-				<groupId>dk.kvalitetsit</groupId>
-				<artifactId>spring-prometheus-app-info</artifactId>
-				<version>${spring-prometheus-app-info-version}</version>
-			</dependency>
 
-			<!-- Request ID logger -->
-			<dependency>
-				<groupId>dk.kvalitetsit</groupId>
-				<artifactId>spring-request-id-logger</artifactId>
-				<version>1.0.1</version>
-			</dependency>
 
 			<!-- Jackson Databind nullable -->
 			<dependency>

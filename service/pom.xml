@@ -55,18 +55,6 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
 
-        <!-- Actuator so it possible to get metrics -->
-        <dependency>
-            <groupId>dk.kvalitetsit</groupId>
-            <artifactId>spring-prometheus-app-info</artifactId>
-        </dependency>
-
-        <!-- Request id logger -->
-        <dependency>
-            <groupId>dk.kvalitetsit</groupId>
-            <artifactId>spring-request-id-logger</artifactId>
-        </dependency>
-
         <!-- Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
