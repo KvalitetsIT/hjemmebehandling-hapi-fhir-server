@@ -63,7 +63,7 @@ public class HjemmebehandlingJpaServerConfiguration extends BaseJavaConfigR4 {
     //extraProperties.put("spring.datasource.url", "jdbc:h2:file:./target/database/h2");
     //extraProperties.put("url", "jdbc:h2:file:./target/database/h2");
 
-    extraProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+    extraProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
     extraProperties.put("hibernate.format_sql", "true");
     extraProperties.put("hibernate.hbm2ddl.auto", "update");
     extraProperties.put("hibernate.jdbc.batch_size", "20");
