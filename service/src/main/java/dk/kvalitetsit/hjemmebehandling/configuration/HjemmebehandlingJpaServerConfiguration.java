@@ -7,6 +7,7 @@ import ca.uhn.fhir.jpa.model.config.PartitionSettings;
 import ca.uhn.fhir.jpa.model.entity.ModelConfig;
 import dk.kvalitetsit.hjemmebehandling.interceptor.MethodTimerInterceptor;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -113,5 +114,10 @@ public class HjemmebehandlingJpaServerConfiguration extends BaseJavaConfigR4 {
   @Bean
   public MethodTimerInterceptor methodInterceptor(MeterRegistry meterRegistry) {
     return new MethodTimerInterceptor(meterRegistry);
+  }
+
+  @Bean
+  public MeterRegistry meterRegistry() {
+    return new SimpleMeterRegistry(); // Provides a default no-op registry
   }
 }

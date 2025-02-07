@@ -149,23 +149,6 @@
 				<version>1.8.3</version>
 				<scope>test</scope>
 			</dependency>
-
-
-			<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-core -->
-			<dependency>
-				<groupId>io.micrometer</groupId>
-				<artifactId>micrometer-core</artifactId>
-				<version>${micrometer.version}</version>
-			</dependency>
-
-			<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
-			<dependency>
-				<groupId>io.micrometer</groupId>
-				<artifactId>micrometer-registry-prometheus</artifactId>
-				<version>${micrometer.version}</version>
-			</dependency>
-
-
 		</dependencies>
 	</dependencyManagement>
 
