@@ -4,14 +4,13 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import org.hamcrest.Matchers;
 import org.hl7.fhir.r4.model.CapabilityStatement;
-import org.junit.Test;
-import org.openapitools.client.ApiException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 
 public class HapiFhirServerIT extends AbstractIntegrationTest {
 
@@ -23,15 +22,14 @@ public class HapiFhirServerIT extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testHapiServerConformance() throws ApiException {
+    public void testHapiServerConformance()  {
         CapabilityStatement cs = client.capabilities().ofType(CapabilityStatement.class).execute();
-        CapabilityStatement.CapabilityStatementRestResourceComponent resource = cs.getRest().get(0).getResource().get(0);
-
-        List<String> supportedResources = cs.getRest().get(0).getResource().stream()
-            .map(t -> t.getProfile())
+        List<CapabilityStatement.CapabilityStatementRestResourceComponent> resource = cs.getRest().get(0).getResource();
+        List<String> supportedResources = resource.stream()
+            .map(CapabilityStatement.CapabilityStatementRestResourceComponent::getProfile)
             .collect(Collectors.toList());
 
-        assertEquals(11, supportedResources.size());
+        Assertions.assertEquals(11, supportedResources.size());
 
         assertThat(supportedResources.toString(), supportedResources, Matchers.contains(
             "http://hl7.org/fhir/StructureDefinition/CarePlan",

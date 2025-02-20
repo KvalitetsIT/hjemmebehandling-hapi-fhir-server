@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MySQLContainer;
+
 import org.testcontainers.containers.Network;
+import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
@@ -17,23 +18,24 @@ import java.util.Collections;
 
 public class ServiceStarter {
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
-    private static final Logger serviceLogger = LoggerFactory.getLogger("hjemmebehandling-hapi-fhir-server");
-    private static final Logger mysqlLogger = LoggerFactory.getLogger("mysql");
+
 
     private Network dockerNetwork;
     private String jdbcUrl;
 
     public void startServices() {
+        logger.info("Starting services...");
         dockerNetwork = Network.newNetwork();
 
         setupDatabaseContainer();
+        logger.info("Database successfully started");
 
         System.setProperty("base.url", "http://localhost:8080/fhir");
         System.setProperty("spring.datasource.url", jdbcUrl);
         System.setProperty("spring.datasource.username", "hapi");
         System.setProperty("spring.datasource.password", "hapi");
         System.setProperty("spring.batch.job.enabled", "false");
-        System.setProperty("spring.datasource.driverClassName", "com.mysql.jdbc.Driver");
+        System.setProperty("spring.datasource.driverClassName", "org.postgresql.Driver");
         System.setProperty("spring.batch.job.enabled", "false");
         System.setProperty("elasticsearch.enabled", "false");
         System.setProperty("spring.autoconfigure.exclude", "org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration");
@@ -69,49 +71,44 @@ public class ServiceStarter {
                 .withNetworkAliases("hjemmebehandling-hapi-fhir-server")
 
                 .withEnv("LOG_LEVEL", "INFO")
-
-                .withEnv("spring.datasource.url", "jdbc:mysql://mysql:3306/hapi")
+                .withEnv("spring.datasource.url", "jdbc:postgresql://postgres:5432/hapi")
                 .withEnv("spring.datasource.username", "hapi")
                 .withEnv("spring.datasource.password", "hapi")
 
                 .withEnv("spring.flyway.locations", "classpath:db/migration,filesystem:/app/sql")
-
-//                .withEnv("JVM_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000")
-
-                .withExposedPorts(8081,8080)
-                .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200).withStartupTimeout(Duration.ofMinutes(3)));
+                .withExposedPorts(8081, 8080)
+                .waitingFor(Wait.forHttp("/fhir/metadata").forPort(8080).forStatusCode(200).withStartupTimeout(Duration.ofMinutes(3)));
         service.start();
-        attachLogger(serviceLogger, service);
+        attachLogger("fhir", service);
 
         return service;
     }
 
     private boolean containerRunning(String containerName) {
-        return DockerClientFactory
+        return !DockerClientFactory
                 .instance()
                 .client()
                 .listContainersCmd()
                 .withNameFilter(Collections.singleton(containerName))
-                .exec()
-                .size() != 0;
+                .exec().isEmpty();
     }
 
     private void setupDatabaseContainer() {
         // Database server for Organisation.
-        MySQLContainer mysql = (MySQLContainer) new MySQLContainer("mysql:5.7")
+        PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>("postgres:16-alpine")
                 .withDatabaseName("hapi")
                 .withUsername("hapi")
                 .withPassword("hapi")
                 .withNetwork(dockerNetwork)
-                .withNetworkAliases("mysql");
-        mysql.start();
-        jdbcUrl = mysql.getJdbcUrl();
-        attachLogger(mysqlLogger, mysql);
+                .withNetworkAliases("postgres");
+        postgresql.start();
+        jdbcUrl = postgresql.getJdbcUrl();
+        attachLogger("postgres", postgresql);
     }
 
-    private void attachLogger(Logger logger, GenericContainer container) {
+    private void attachLogger(String prefix, GenericContainer container) {
         ServiceStarter.logger.info("Attaching logger to container: " + container.getContainerInfo().getName());
-        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger);
+        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger).withPrefix(prefix);
         container.followOutput(logConsumer);
     }
 }

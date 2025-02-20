@@ -1,236 +1,322 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<packaging>pom</packaging>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
 
-	<repositories>
-		<repository>
-			<id>Central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
-			<id>github-public</id>
-			<url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url>
-		</repository>
-		<repository>
-			<id>github-public1</id>
-			<url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url>
-		</repository>
-	</repositories>
-
-	<modules>
-		<module>web</module>
-		<module>service</module>
+    <modules>
+        <module>web</module>
+        <module>service</module>
         <module>integrationtest</module>
-		<module>testreport</module>
-		<module>documentation</module>
-	</modules>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.2</version>
-	</parent>
-	<groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
-	<artifactId>hjemmebehandling-hapi-fhir-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>hjemmebehandling-hapi-fhir-server</name>
-	<description>KITHUGS service</description>
+        <module>testreport</module>
+        <module>documentation</module>
+    </modules>
+    <parent>
+        <groupId>ca.uhn.hapi.fhir</groupId>
+        <artifactId>hapi-fhir</artifactId>
+        <version>7.4.5</version>
+    </parent>
+    <groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
+    <artifactId>hjemmebehandling-hapi-fhir-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>hjemmebehandling-hapi-fhir-server</name>
+    <description>KITHUGS service</description>
 
-	<properties>
-		<java.version>11</java.version>
-		<testcontainers.version>1.15.1</testcontainers.version>
-		<spring-prometheus-app-info-version>1.0.3</spring-prometheus-app-info-version>
-		<hapi.version>5.6.1</hapi.version>
-	</properties>
+    <properties>
+        <jakarta-validation.version>3.0.2</jakarta-validation.version>
+        <java.version>21</java.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
+        <spring-prometheus-app-info-version>2.0.3</spring-prometheus-app-info-version>
+        <hapi.version>7.4.5</hapi.version>
+        <jersey.version>3.1.6</jersey.version>
+        <flyway.version>10.11.1</flyway.version>
+        <micrometer.version>1.13.3</micrometer.version>
+        <jacoco.version>0.8.12</jacoco.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<dependencyManagement>
-		<dependencies>
-			<!-- Modules in project -->
-			<dependency>
-				<groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
-				<artifactId>service</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+    <dependencyManagement>
+        <dependencies>
 
-			<dependency>
-				<groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
-				<artifactId>integrationtest</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-jpaserver-base</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
-				<artifactId>web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-jpaserver-test-utilities</artifactId>
+                <version>${hapi.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.sun.xml.bind</groupId>
+                        <artifactId>jaxb-impl</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
-			<dependency>
-				<groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
-				<artifactId>documentation</artifactId>
-				<version>${project.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
 
-			<!-- Logging -->
-			<dependency>
-				<groupId>net.logstash.logback</groupId>
-				<artifactId>logstash-logback-encoder</artifactId>
-				<version>6.3</version>
-			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
 
-			<!-- Actuator and prometheus -->
-			<dependency>
-				<groupId>dk.kvalitetsit</groupId>
-				<artifactId>spring-prometheus-app-info</artifactId>
-				<version>${spring-prometheus-app-info-version}</version>
-			</dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-server-openapi</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
 
-			<!-- Request ID logger -->
-			<dependency>
-				<groupId>dk.kvalitetsit</groupId>
-				<artifactId>spring-request-id-logger</artifactId>
-				<version>1.0.1</version>
-			</dependency>
+            <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-core -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-core</artifactId>
+                <version>${micrometer.version}</version>
+            </dependency>
 
-			<!-- Jackson Databind nullable -->
-			<dependency>
-				<groupId>org.openapitools</groupId>
-				<artifactId>jackson-databind-nullable</artifactId>
-				<version>0.2.1</version>
-			</dependency>
+            <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${micrometer.version}</version>
+            </dependency>
 
-			<!-- Springfox - used as part of API itnerface generation -->
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-core</artifactId>
-				<version>3.0.0</version>
-			</dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-base</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
 
-			<!-- Swagger core -->
-			<dependency>
-				<groupId>io.swagger</groupId>
-				<artifactId>swagger-annotations</artifactId>
-				<version>1.5.22</version>
-			</dependency>
+            <!-- Modules in project -->
+            <dependency>
+                <groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
+                <artifactId>service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-			<!-- Test dependencies - test containers -->
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>mockserver</artifactId>
-				<version>${testcontainers.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
+                <artifactId>integrationtest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>mysql</artifactId>
-				<version>${testcontainers.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
+                <artifactId>web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.mock-server</groupId>
-				<artifactId>mockserver</artifactId>
-				<version>3.12</version>
-			</dependency>
+            <dependency>
+                <groupId>dk.kvalitetsit.hjemmebehandling-hapi-fhir-server</groupId>
+                <artifactId>documentation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.mock-server</groupId>
-				<artifactId>mockserver-client-java</artifactId>
-				<version>3.12</version>
-			</dependency>
+            <!-- Logging -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>8.0</version>
+            </dependency>
 
-			<!-- Code coverage -->
-			<dependency>
-				<groupId>org.jacoco</groupId>
-				<artifactId>org.jacoco.agent</artifactId>
-				<version>0.8.5</version>
-			</dependency>
 
-			<!-- Integration test client dependencies -->
-			<dependency>
-				<groupId>com.google.code.findbugs</groupId>
-				<artifactId>jsr305</artifactId>
-				<version>3.0.2</version>
-				<scope>test</scope>
-			</dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>  <!-- Latest Flyway 10 version -->
+            </dependency>
 
-			<dependency>
-				<groupId>com.squareup.okhttp3</groupId>
-				<artifactId>okhttp</artifactId>
-				<version>4.9.1</version>
-				<scope>test</scope>
-			</dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>io.gsonfire</groupId>
-				<artifactId>gson-fire</artifactId>
-				<version>1.8.3</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <!--             Actuator and prometheus -->
+            <dependency>
+                <groupId>dk.kvalitetsit</groupId>
+                <artifactId>spring-prometheus-app-info</artifactId>
+                <version>${spring-prometheus-app-info-version}</version>
+            </dependency>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
+            <!-- Request ID logger -->
+            <dependency>
+                <groupId>dk.kvalitetsit</groupId>
+                <artifactId>spring-request-id-logger</artifactId>
+                <version>2.0.1</version>
+            </dependency>
 
-		<plugins>
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<version>4.0.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<prefix>git</prefix>
-					<dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
-					<verbose>true</verbose>
-					<useNativeGit>false</useNativeGit>
-					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-					<skipPoms>false</skipPoms>
-					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-					<generateGitPropertiesFilename>target/classes/git.properties</generateGitPropertiesFilename>
-					<failOnNoGitDirectory>false</failOnNoGitDirectory>
-					<abbrevLength>7</abbrevLength>
-					<offline>true</offline>
-					<skip>false</skip>
-					<gitDescribe>
-						<skip>false</skip>
-						<always>false</always>
-						<dirty>-dirty</dirty>
-						<forceLongFormat>false</forceLongFormat>
-					</gitDescribe>
-				</configuration>
-			</plugin>
+            <!-- Jackson Databind nullable -->
+            <dependency>
+                <groupId>org.openapitools</groupId>
+                <artifactId>jackson-databind-nullable</artifactId>
+                <version>0.2.6</version>
+            </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-			</plugin>
+            <!-- Springfox - used as part of API itnerface generation -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-core</artifactId>
+                <version>3.0.0</version>
+            </dependency>
 
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+            <!-- Swagger core -->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>2.2.28</version>
+            </dependency>
+
+            <!-- Test dependencies - test containers -->
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mockserver</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver</artifactId>
+                <version>3.12</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-client-java</artifactId>
+                <version>5.15.0</version>
+            </dependency>
+
+            <!-- Code coverage -->
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>${jacoco.version}</version>
+            </dependency>
+
+            <!-- Integration test client dependencies -->
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>3.0.2</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>4.12.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.gsonfire</groupId>
+                <artifactId>gson-fire</artifactId>
+                <version>1.9.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.jersey</groupId>
+                <artifactId>jersey-bom</artifactId>
+                <version>${jersey.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>${spring_boot_version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.45.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.9.10</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <prefix>git</prefix>
+                    <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
+                    <verbose>true</verbose>
+                    <useNativeGit>false</useNativeGit>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <skipPoms>false</skipPoms>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>target/classes/git.properties</generateGitPropertiesFilename>
+                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                    <abbrevLength>7</abbrevLength>
+                    <offline>true</offline>
+                    <skip>false</skip>
+                    <gitDescribe>
+                        <skip>false</skip>
+                        <always>false</always>
+                        <dirty>-dirty</dirty>
+                        <forceLongFormat>false</forceLongFormat>
+                    </gitDescribe>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

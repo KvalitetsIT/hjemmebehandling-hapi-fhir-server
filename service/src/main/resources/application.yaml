@@ -1,0 +1,5 @@
+spring:
+  flyway:
+    enabled: false
+  main:
+    allow-circular-references: true
