@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   postgresql:
-    image: postgresql:16-alpine
+    image: postgresql:17-alpine
     environment:
       - POSTGRES_ROOT_PASSWORD=rootroot
       - POSTGRES_DATABASE=hellodb
