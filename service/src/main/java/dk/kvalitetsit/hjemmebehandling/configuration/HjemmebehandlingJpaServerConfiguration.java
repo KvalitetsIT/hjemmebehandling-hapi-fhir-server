@@ -100,7 +100,7 @@ public class HjemmebehandlingJpaServerConfiguration extends BaseJavaConfigR4 {
     retVal.setAllowInlineMatchUrlReferences(true);
     retVal.setReuseCachedSearchResultsForMillis(null);
     retVal.setExpungeEnabled(true);
-
+    retVal.setResourceClientIdStrategy(DaoConfig.ClientIdStrategyEnum.ANY);
     return retVal;
   }
 
