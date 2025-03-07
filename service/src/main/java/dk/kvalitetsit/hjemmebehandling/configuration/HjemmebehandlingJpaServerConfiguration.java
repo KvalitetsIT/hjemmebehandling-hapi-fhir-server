@@ -103,7 +103,7 @@ public class HjemmebehandlingJpaServerConfiguration {
         retVal.setAllowInlineMatchUrlReferences(true);
         retVal.setReuseCachedSearchResultsForMillis(null);
         retVal.setExpungeEnabled(true);
-
+        retVal.setResourceClientIdStrategy(JpaStorageSettings.ClientIdStrategyEnum.ANY);
         return retVal;
     }
 
