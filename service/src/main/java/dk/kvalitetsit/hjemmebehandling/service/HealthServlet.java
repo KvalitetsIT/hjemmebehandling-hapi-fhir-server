@@ -42,13 +42,13 @@ public class HealthServlet extends HttpServlet {
     response.setStatus(healthStatus.healthy ? 200 : 500);
   }
 
-  public HealthStatus getHealth() {
+  private HealthStatus getHealth() {
     boolean healthy = databaseHealth.isHealthy();
     return new HealthStatus(healthy, "{ \"version\": \"" + version + "\", "
-        + "\"database\": \"" + healthy + "\"}");
+            + "\"database\": \"" + healthy + "\"}");
   }
 
-  class HealthStatus {
+  private static class HealthStatus {
     private HealthStatus(boolean healthy, String status) {
       this.healthy = healthy;
       this.status = status;
