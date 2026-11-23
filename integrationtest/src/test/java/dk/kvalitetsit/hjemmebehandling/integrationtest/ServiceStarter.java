@@ -9,9 +9,9 @@ import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.GenericContainer;
 
 import org.testcontainers.containers.Network;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -95,7 +95,7 @@ public class ServiceStarter {
 
     private void setupDatabaseContainer() {
         // Database server for Organisation.
-        PostgreSQLContainer<?> postgresql = new PostgreSQLContainer<>("postgres:16-alpine")
+        PostgreSQLContainer postgresql = new PostgreSQLContainer("postgres:16-alpine")
                 .withDatabaseName("hapi")
                 .withUsername("hapi")
                 .withPassword("hapi")
